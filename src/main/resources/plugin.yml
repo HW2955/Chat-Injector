@@ -1,0 +1,9 @@
+name: ChatInjector
+version: '${project.version}'
+main: me.hwn2955.chatinjector.ChatInjector
+api-version: 1.17
+prefix: Chat-Injector
+depend: [ PlaceholderAPI, ProtocolLib ]
+authors: [ HWN2955 ]
+description: Simple plugin to parse PAPI placeholders in chat messages.
+website: https://github.com/HW2955/Chat-Injector
