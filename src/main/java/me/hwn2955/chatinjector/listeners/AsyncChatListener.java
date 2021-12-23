@@ -1,6 +1,7 @@
 package me.hwn2955.chatinjector.listeners;
 
 import me.clip.placeholderapi.PlaceholderAPI;
+import me.hwn2955.chatinjector.ChatInjector;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -12,9 +13,7 @@ public class AsyncChatListener implements Listener {
     public void onAsyncChatEvent(AsyncPlayerChatEvent e) {
         String msg = e.getMessage();
         Matcher matcher = PlaceholderAPI.getBracketPlaceholderPattern().matcher(msg);
-
-        //TODO add permission check or debug command ;)
-        if (matcher.find() && e.getPlayer().hasPermission("chatinjector.parsechat")) {
+        if (matcher.find() && e.getPlayer().hasPermission("chatinjector.parsechat") && ChatInjector.config.getBoolean("allow_placeholders_in_messages")) {
             msg = PlaceholderAPI.setBracketPlaceholders(e.getPlayer(), msg);
         }
         e.setMessage(msg);

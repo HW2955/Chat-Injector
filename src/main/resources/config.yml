@@ -1,0 +1,13 @@
+#This only applies for players with permission 'chatinjector.parsechat'
+#If true players with permission 'chatinjector.parsechat' will be able to use placeholders on their own!
+#Otherwise, noone will be able to use them.
+allow_placeholders_in_messages: false
+
+messages:
+  prefix: "&8[&7ChatInjector&8] &8&l» "
+  no-permission: "&cI'm sorry but you do not have permission to perform this command. Please contact the server administrator if you believe that this is in error."
+  reload-success: "&aReloaded successfully!"
+  reload-failed: "&cReload failed! check logs for more information."
+
+#Don't change this, or I'll beat your head with a stick.
+config-version: 1.1

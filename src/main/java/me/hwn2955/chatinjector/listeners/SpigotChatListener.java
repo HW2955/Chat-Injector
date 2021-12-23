@@ -20,6 +20,7 @@ public class SpigotChatListener extends PacketAdapter {
 
     public void onPacketSending(PacketEvent e) {
         if (e.getPlayer() == null) { return; }
+
         StructureModifier<WrappedChatComponent> chat = e.getPacket().getChatComponents();
         WrappedChatComponent chatComponent = chat.read(0);
 
@@ -39,7 +40,6 @@ public class SpigotChatListener extends PacketAdapter {
         if (component == null) { return; }
 
         String msg = ComponentSerializer.toString(component);
-
         if (msg == null) { return; }
         if (!PlaceholderAPI.getBracketPlaceholderPattern().matcher(msg).find()) { return; }
 
