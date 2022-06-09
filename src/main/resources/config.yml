@@ -9,5 +9,14 @@ messages:
   reload-success: "&aReloaded successfully!"
   reload-failed: "&cReload failed! check logs for more information."
 
+chat-item:
+  format-single: "<%item%>"
+  format-multiple: "<%item%> x%amount%"
+  placeholders:
+    - "[i]"
+    - "[I]"
+    - "[item]"
+    - "[ITEM]"
+
 #Don't change this, or I'll beat your head with a stick.
-config-version: 1.1
+config-version: 1.2

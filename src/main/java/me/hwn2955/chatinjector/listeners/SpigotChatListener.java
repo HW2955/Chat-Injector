@@ -19,19 +19,18 @@ public class SpigotChatListener extends PacketAdapter {
     }
 
     public void onPacketSending(PacketEvent e) {
-        if (e.getPlayer() == null) { return; }
-
         StructureModifier<WrappedChatComponent> chat = e.getPacket().getChatComponents();
-        WrappedChatComponent chatComponent = chat.read(0);
+        WrappedChatComponent chatComponent = chat.readSafely(0);
 
         if (chatComponent != null) {
             String msg = chatComponent.getJson();
-
             if (msg == null) { return; }
-            if (!PlaceholderAPI.getBracketPlaceholderPattern().matcher(msg).find()) { return; }
 
-            msg = PlaceholderAPI.setPlaceholders(e.getPlayer(), msg);
-            chat.write(0, WrappedChatComponent.fromJson(msg));
+            if (PlaceholderAPI.getBracketPlaceholderPattern().matcher(msg).find()) {
+                msg = PlaceholderAPI.setPlaceholders(e.getPlayer(), msg);
+            }
+
+            chat.writeSafely(0, WrappedChatComponent.fromJson(msg));
             return;
         }
 
@@ -41,9 +40,12 @@ public class SpigotChatListener extends PacketAdapter {
 
         String msg = ComponentSerializer.toString(component);
         if (msg == null) { return; }
-        if (!PlaceholderAPI.getBracketPlaceholderPattern().matcher(msg).find()) { return; }
 
-        msg = PlaceholderAPI.setBracketPlaceholders(e.getPlayer(), msg);
-        modifier.write(0, ComponentSerializer.parse(msg));
+        if (PlaceholderAPI.getBracketPlaceholderPattern().matcher(msg).find()) {
+            msg = PlaceholderAPI.setPlaceholders(e.getPlayer(), msg);
+        }
+
+        modifier.writeSafely(0, ComponentSerializer.parse(msg));
     }
+
 }

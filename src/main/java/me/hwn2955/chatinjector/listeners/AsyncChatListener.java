@@ -12,17 +12,17 @@ public class AsyncChatListener implements Listener {
     @EventHandler
     public void onAsyncChatEvent(AsyncPlayerChatEvent e) {
         String msg = e.getMessage();
-        Matcher matcher = PlaceholderAPI.getBracketPlaceholderPattern().matcher(msg);
+        Matcher matcher = PlaceholderAPI.getPlaceholderPattern().matcher(msg);
         if (matcher.find() && e.getPlayer().hasPermission("chatinjector.parsechat") && ChatInjector.config.getBoolean("allow_placeholders_in_messages")) {
-            msg = PlaceholderAPI.setBracketPlaceholders(e.getPlayer(), msg);
+            msg = PlaceholderAPI.setPlaceholders(e.getPlayer(), msg);
         }
         e.setMessage(msg);
 
         String format = e.getFormat();
-        matcher = PlaceholderAPI.getBracketPlaceholderPattern().matcher(format);
+        matcher = PlaceholderAPI.getPlaceholderPattern().matcher(format);
 
         if (matcher.find()) {
-            format = PlaceholderAPI.setBracketPlaceholders(e.getPlayer(), format);
+            format = PlaceholderAPI.setPlaceholders(e.getPlayer(), format);
             e.setFormat(format);
         }
     }

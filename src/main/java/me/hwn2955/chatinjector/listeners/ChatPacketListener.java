@@ -1,5 +1,6 @@
 package me.hwn2955.chatinjector.listeners;
 
+import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
@@ -10,12 +11,10 @@ import me.clip.placeholderapi.PlaceholderAPIPlugin;
 
 public class ChatPacketListener extends PacketAdapter {
     public ChatPacketListener() {
-        super(PlaceholderAPIPlugin.getInstance(), ListenerPriority.HIGHEST, com.comphenix.protocol.PacketType.Play.Server.CHAT);
+        super(PlaceholderAPIPlugin.getInstance(), ListenerPriority.HIGHEST, PacketType.Play.Server.CHAT);
     }
 
     public void onPacketSending(PacketEvent e) {
-        if (e.getPlayer() == null) { return; }
-
         StructureModifier<WrappedChatComponent> chat = e.getPacket().getChatComponents();
         WrappedChatComponent chatComponent = chat.readSafely(0);
         if (chatComponent == null) { return; }
@@ -23,9 +22,10 @@ public class ChatPacketListener extends PacketAdapter {
         String msg = chatComponent.getJson();
         if (msg == null) { return; }
 
-        if (!PlaceholderAPI.getBracketPlaceholderPattern().matcher(msg).find()) { return; }
+        if (PlaceholderAPI.getPlaceholderPattern().matcher(msg).find()) {
+            msg = PlaceholderAPI.setPlaceholders(e.getPlayer(), msg);
+        }
 
-        msg = PlaceholderAPI.setBracketPlaceholders(e.getPlayer(), msg);
-        chat.write(0, WrappedChatComponent.fromJson(msg));
+        chat.writeSafely(0, WrappedChatComponent.fromJson(msg));
     }
 }

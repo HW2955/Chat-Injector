@@ -8,6 +8,7 @@ public class MessageFormatter {
                 .replace("&amp;", "§");
     }
 
+    //note doubt this strips color from HEX codes
     public static String stripColor(String message) {
         return message
                 .replaceAll("((?:§\\w){1,7})","");
